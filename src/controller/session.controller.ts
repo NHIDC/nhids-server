@@ -136,7 +136,7 @@ export async function changePasswordSessionHandler(req: Request, res: Response) 
     } catch (e: any) {
         logger.error(e);
 
-        res.status(500).json.({
+        res.status(500).json({
             status: false,
             statusCode: 500,
             message: "Internal server error",
