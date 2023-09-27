@@ -23,8 +23,7 @@ const routes = (app: Express) => {
 
     app.delete('/api/v1/sessions', requireUser, deleteSessionHandler);
 
-    app.patch(`/api/v1/sessions/change-password`, requireUser, changePasswordSessionHandler)
-
+    app.patch(`/api/v1/sessions/change-password`, requireUser, changePasswordSessionHandler);
 
 }
 

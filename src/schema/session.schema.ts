@@ -10,4 +10,4 @@ export const createSessionSchema = object({
         })
 
     })
-})
+});
