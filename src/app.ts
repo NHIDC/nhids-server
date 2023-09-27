@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 app.listen(port, async () => {
-    logger.info(`App is running at http://localhost:${port}`)
+    logger.info(`App is running at https://nhids-server.vercel.app:${port}`)
     await connect();
 })
 
