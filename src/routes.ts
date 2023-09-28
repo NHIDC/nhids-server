@@ -8,12 +8,15 @@ import requireUser from './middleware.ts/requireUser';
 import { createUserHandler, getAllUsers, resetUserPasswordHandler } from './controller/user.controller';
 
 const routes = (app: Express) => {
+    app.get('/', (req: Request, res: Response) =>
+        res.status(200).send('welcome to nhids'));
+
     app.get('/healthcheck', (req: Request, res: Response) =>
         res.status(200).send('server up'));
 
     app.post('/api/v1/users', validate(createUserSchema), createUserHandler);
 
-    app.get('/api/v1/users',  getAllUsers);
+    app.get('/api/v1/users', getAllUsers);
 
     app.post('/api/v1/users/reset-password', resetUserPasswordHandler);
 
