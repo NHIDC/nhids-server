@@ -5,7 +5,7 @@ import { createUserSchema } from './schema/user.schema';
 import { createSessionSchema } from './schema/session.schema';
 import { changePasswordSessionHandler, createUserSessionHandler, deleteSessionHandler, getUserSessionsHandler } from './controller/session.controller';
 import requireUser from './middleware.ts/requireUser';
-import { createUserHandler, getAllUsers, resetUserPasswordHandler } from './controller/user.controller';
+import { createUserHandler, getAllUsers, getUserProfile, resetUserPasswordHandler, updateUserProfile } from './controller/user.controller';
 
 const routes = (app: Express) => {
     app.get('/', (req: Request, res: Response) =>
@@ -17,6 +17,10 @@ const routes = (app: Express) => {
     app.post('/api/v1/users', validate(createUserSchema), createUserHandler);
 
     app.get('/api/v1/users', getAllUsers);
+
+    app.put('/api/v1/users/:userId/profile', requireUser, updateUserProfile);
+
+    app.get('/api/v1/users/:userId/profile', getUserProfile);
 
     app.post('/api/v1/users/reset-password', resetUserPasswordHandler);
 

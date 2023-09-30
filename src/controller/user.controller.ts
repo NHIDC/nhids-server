@@ -5,6 +5,7 @@ import UserModel, { UserDocumentWithResetToken } from "../models/user.model"; im
 import nodemailer from 'nodemailer'
 import logger from "../utils/logger";
 import config from "config";
+import { updateUserProfileField } from "../middleware.ts/updateUserProfileField";
 
 
 export async function createUserHandler(req: Request, res: Response) {
@@ -35,6 +36,90 @@ export async function createUserHandler(req: Request, res: Response) {
     } catch (e: any) {
         logger.error(e);
         return res.status(409).send(e.message);
+    }
+}
+
+export async function getUserProfile(req: Request, res: Response) {
+    try {
+
+        //retrieve id from request parameters
+        const userId = req.params.userId; //give params name userId
+
+        const user = await UserModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                status: false,
+                statusCode: 404,
+                nessage: "User not found",
+            });
+        }
+        // Omit the password field (if it exists) from the user object
+        const userWithoutPassword = omit(user.toJSON(), "password");
+
+        return res.status(200).json({
+            status: true,
+            statusCode: 200,
+            message: "User profile retrieved successfully",
+            data: [userWithoutPassword],
+        });
+    } catch (e: any) {
+        logger.error(e);
+        return res.status(500).json({
+            status: false,
+            statusCode: 500,
+            message: "Internal server error",
+        });
+    }
+}
+
+export async function updateUserProfile(req: Request, res: Response) {
+    try {
+        // Retrieve the user's ID from the request parameters
+        const userId = req.params.userId; // Assuming you have a route parameter named 'userId'
+
+        // Find the user by ID in the database
+        const user = await UserModel.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                status: false,
+                statusCode: 404,
+                message: "User not found",
+            });
+        }
+
+        // Define the fields to update based on the request body
+        const updateFields = {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phone: req.body.phone,
+            skills: req.body.skills,
+            date_of_birth: req.body.date_of_birth,
+            // Add more fields to update as needed
+        };
+
+        // Call the reusable function to update the fields
+        await updateUserProfileField(user, updateFields);
+
+        // Omit the password field (if it exists) from the user object
+        const userWithoutPassword = omit(user.toJSON(), "password");
+
+        return res.status(200).json({
+            status: true,
+            statusCode: 200,
+            message: "User profile updated successfully",
+            data: userWithoutPassword,
+        });
+        
+    } catch (e: any) {
+        logger.error(e);
+        return res.status(500).json({
+            status: false,
+            statusCode: 500,
+            message: "Internal server error",
+        });
     }
 }
 
