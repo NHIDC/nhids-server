@@ -30,7 +30,7 @@
   "dependencies": {
     "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.0.1",
-    "config": "^3.3.7",
+    "config": "^3.3.9",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.1",

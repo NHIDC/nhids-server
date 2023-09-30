@@ -17,3 +17,11 @@ app.listen(port, async () => {
 })
 
 routes(app);
+
+// Access the privateKey property from the configuration
+const privateKey = config.has('privateKey') ? config.get('privateKey') : null;
+
+if (!privateKey) {
+  console.error('Private key is not defined in the configuration.');
+  // Handle the error or provide a default value as needed
+}
