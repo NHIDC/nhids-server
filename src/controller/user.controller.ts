@@ -112,7 +112,7 @@ export async function updateUserProfile(req: Request, res: Response) {
             message: "User profile updated successfully",
             data: userWithoutPassword,
         });
-        
+
     } catch (e: any) {
         logger.error(e);
         return res.status(500).json({
@@ -121,6 +121,10 @@ export async function updateUserProfile(req: Request, res: Response) {
             message: "Internal server error",
         });
     }
+}
+
+export async function passage(req: Request, res: Response) {
+
 }
 
 
