@@ -3,6 +3,9 @@ import config from 'config'
 import logger from './utils/logger';
 import connect from './utils/connect';
 import routes from './routes';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 const port = config.get<number>("port");
@@ -12,16 +15,9 @@ app.use(express.json());
 
 
 app.listen(port, async () => {
-    logger.info(`App is running at https://nhids-server.vercel.app:${port}`)
+    logger.info(`App is running at http://localhost:${port}`)
     await connect();
 })
 
 routes(app);
 
-// Access the privateKey property from the configuration
-const privateKey = config.has('privateKey') ? config.get('privateKey') : null;
-
-if (!privateKey) {
-  console.error('Private key is not defined in the configuration.');
-  // Handle the error or provide a default value as needed
-}
