@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 app.listen(port, async () => {
-    logger.info(`App is running at http://localhost:${port}`)
+    logger.info(`App is running at https://nhidc-server-aaa9633d509e.herokuapp.com:${port}`)
     await connect();
 })
 
