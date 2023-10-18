@@ -1,8 +1,10 @@
+import "dotenv/config";
 import express from 'express';
 import config from 'config'
 import logger from './utils/logger';
 import connect from './utils/connect';
 import routes from './routes';
+
 
 
 const port = config.get<number>("port");
@@ -12,8 +14,10 @@ app.use(express.json());
 
 
 app.listen(port, async () => {
-    logger.info(`App is running at https://nhids-server.vercel.app:${port}`)
+    logger.info(`App is running at http://localhost:${port}`)
     await connect();
+    routes(app);
 })
 
-routes(app);
+
+
