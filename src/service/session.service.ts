@@ -1,4 +1,4 @@
-import { LeanDocument, FilterQuery, UpdateQuery } from "mongoose";
+import { FilterQuery, UpdateQuery } from "mongoose";
 import config from "config";
 import { get } from "lodash";
 
@@ -19,10 +19,10 @@ export function createAccessToken({
 }: {
     user:
     | Omit<UserDocument, "password">
-    | LeanDocument<Omit<UserDocument, "password">>;
+    | Omit<UserDocument, "password">;
     session:
     | Omit<SessionDocument, "password">
-    | LeanDocument<Omit<SessionDocument, "password">>;
+    | Omit<SessionDocument, "password">;
 }) {
     // Build and return the new access token
     const accessToken = signJwt(

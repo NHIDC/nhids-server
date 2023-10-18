@@ -1,11 +1,10 @@
+import "dotenv/config";
 import express from 'express';
 import config from 'config'
 import logger from './utils/logger';
 import connect from './utils/connect';
 import routes from './routes';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 
 const port = config.get<number>("port");
@@ -15,9 +14,10 @@ app.use(express.json());
 
 
 app.listen(port, async () => {
-    logger.info(`App is running at https://nhidc-server-aaa9633d509e.herokuapp.com:${port}`)
+    logger.info(`App is running at http://localhost:${port}`)
     await connect();
+    routes(app);
 })
 
-routes(app);
+
 
