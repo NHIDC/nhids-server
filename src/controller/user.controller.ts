@@ -211,11 +211,16 @@ export async function resetUserPasswordHandler(req: Request, res: Response) {
 export async function getAllUsers(req: Request, res: Response) {
     try {
         const users = await UserModel.find();
+        const usersWithoutPassword = users.map((user) => {
+            const userJSON = user.toJSON();
+            return omit(userJSON, 'password');
+        });
+
         res.status(200).json({
             status: true,
             statusCode: 200,
             message: "Users retrieved successfully",
-            data: users,
+            data: usersWithoutPassword,
         });
     } catch (error) {
         res.status(500).json({
